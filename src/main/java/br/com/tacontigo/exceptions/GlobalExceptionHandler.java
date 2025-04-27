@@ -10,26 +10,35 @@ import jakarta.ws.rs.core.Response;
 public class GlobalExceptionHandler {
 
     @ServerExceptionMapper
-    public RestResponse<ErrorResponse> handleUsuarioCriarException(UsuarioCriarException ex) {
+    public RestResponse<ErrorResponse> handleUsuarioException(UsuarioException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 ex.getCode(),
+                "Erro ao utilizar o recurso Usuário.",
                 ex.getMessage(),
-                null,
                 LocalDateTime.now(),
-                null
-        );
+                null);
+        return RestResponse.status(Response.Status.BAD_REQUEST, errorResponse);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<ErrorResponse> handleQuestaoException(QuestaoException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getCode(),
+                "Erro ao utilizar o recurso Questão.",
+                ex.getMessage(),
+                LocalDateTime.now(),
+                null);
         return RestResponse.status(Response.Status.BAD_REQUEST, errorResponse);
     }
 
     @ServerExceptionMapper
     public RestResponse<ErrorResponse> handleGenericException(Exception ex) {
         ErrorResponse errorResponse = new ErrorResponse(
-                "GEN-001",
+                "SVC-001",
                 "Erro interno do servidor.",
                 ex.getMessage(),
                 LocalDateTime.now(),
-                null
-        );
+                null);
         return RestResponse.status(Response.Status.INTERNAL_SERVER_ERROR, errorResponse);
     }
 }

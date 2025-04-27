@@ -1,14 +1,14 @@
 package br.com.tacontigo.exceptions;
 
-public class UsuarioCriarException extends RuntimeException {
+public class QuestaoException extends RuntimeException {
     private final String code;
 
-    public UsuarioCriarException(String message, String code) {
+    public QuestaoException(String message, String code) {
         super(message);
         this.code = code;
     }
 
-     public UsuarioCriarException(String message) {
+     public QuestaoException(String message) {
         super(message);
         this.code = "";
     }

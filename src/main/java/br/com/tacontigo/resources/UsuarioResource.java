@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
-import br.com.tacontigo.repositories.UsuarioAtualizarRequisicao;
-import br.com.tacontigo.repositories.UsuarioCriarRequisicao;
-import br.com.tacontigo.repositories.UsuarioResposta;
+import br.com.tacontigo.repositories.usuario.UsuarioAtualizarRequisicao;
+import br.com.tacontigo.repositories.usuario.UsuarioCriarRequisicao;
+import br.com.tacontigo.repositories.usuario.UsuarioResposta;
 import br.com.tacontigo.services.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;

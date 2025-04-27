@@ -8,9 +8,9 @@ import org.bson.types.ObjectId;
 import br.com.tacontigo.enums.Genero;
 import br.com.tacontigo.enums.Raca;
 import br.com.tacontigo.enums.TipoUsuario;
+import br.com.tacontigo.exceptions.UsuarioException;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
-import jakarta.ws.rs.NotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +37,7 @@ public class Usuario extends PanacheMongoEntity {
     public static Usuario findById(String id) {
         return findByIdOptional(new ObjectId(id))
                 .map(Usuario.class::cast)
-                .orElseThrow(() -> new NotFoundException("Usuário não encontrado."));
+                .orElseThrow(() -> new UsuarioException("Usuário não encontrado com o id: " + id, "USU-001"));
     }
 
     @SuppressWarnings("unchecked")

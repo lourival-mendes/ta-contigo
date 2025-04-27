@@ -1,4 +1,4 @@
-package br.com.tacontigo.repositories;
+package br.com.tacontigo.repositories.usuario;
 
 import br.com.tacontigo.enums.Genero;
 import br.com.tacontigo.enums.Raca;

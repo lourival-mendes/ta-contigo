@@ -7,10 +7,10 @@ import br.com.tacontigo.entities.Usuario;
 import br.com.tacontigo.enums.Genero;
 import br.com.tacontigo.enums.Raca;
 import br.com.tacontigo.enums.TipoUsuario;
-import br.com.tacontigo.exceptions.UsuarioCriarException;
-import br.com.tacontigo.repositories.UsuarioAtualizarRequisicao;
-import br.com.tacontigo.repositories.UsuarioCriarRequisicao;
-import br.com.tacontigo.repositories.UsuarioResposta;
+import br.com.tacontigo.exceptions.UsuarioException;
+import br.com.tacontigo.repositories.usuario.UsuarioAtualizarRequisicao;
+import br.com.tacontigo.repositories.usuario.UsuarioCriarRequisicao;
+import br.com.tacontigo.repositories.usuario.UsuarioResposta;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -28,66 +28,66 @@ public class UsuarioService {
 
     private void validaUsuarioCriar(UsuarioCriarRequisicao usuarioCriar) {
         if (usuarioCriar.nomeCompleto() == null || usuarioCriar.nomeCompleto().isEmpty()) {
-            throw new UsuarioCriarException("Nome completo não pode ser vazio.", "USR-001");
+            throw new UsuarioException("Nome completo não pode ser vazio.", "USR-001");
         }
         if (usuarioCriar.genero() == null) {
-            throw new UsuarioCriarException("Gênero não pode ser vazio.", "USR-002");
+            throw new UsuarioException("Gênero não pode ser vazio.", "USR-002");
         }
         try {
             Genero.valueOf(usuarioCriar.genero().name());
         } catch (Exception e) {
-            throw new UsuarioCriarException("Gênero inválido: " + usuarioCriar.genero(), "USR-003");
+            throw new UsuarioException("Gênero inválido: " + usuarioCriar.genero(), "USR-003");
         }
         if (usuarioCriar.raca() == null) {
-            throw new UsuarioCriarException("Raça não pode ser vazia.", "USR-004");
+            throw new UsuarioException("Raça não pode ser vazia.", "USR-004");
         }
         try {
             Raca.valueOf(usuarioCriar.raca().name());
         } catch (Exception e) {
-            throw new UsuarioCriarException("Raça inválida: " + usuarioCriar.raca(), "USR-005");
+            throw new UsuarioException("Raça inválida: " + usuarioCriar.raca(), "USR-005");
         }
         if (usuarioCriar.nacionalidade() == null || usuarioCriar.nacionalidade().isEmpty()) {
-            throw new UsuarioCriarException("Nacionalidade não pode ser vazia.", "USR-006");
+            throw new UsuarioException("Nacionalidade não pode ser vazia.", "USR-006");
         }
     }
 
     private void validaUsuarioAtualizar(UsuarioAtualizarRequisicao usuarioAtualizar) {
         if (usuarioAtualizar.nomeCompleto() == null || usuarioAtualizar.nomeCompleto().isEmpty()) {
-            throw new UsuarioCriarException("Nome completo não pode ser nulo ou vazio.", "USR-001");
+            throw new UsuarioException("Nome completo não pode ser nulo ou vazio.", "USR-001");
         }
         if (usuarioAtualizar.tipoUsuario() == null) {
-            throw new UsuarioCriarException("Tipo usuário não pode ser nulo.", "USR-007");
+            throw new UsuarioException("Tipo usuário não pode ser nulo.", "USR-007");
         }
         try {
             TipoUsuario.valueOf(usuarioAtualizar.tipoUsuario().name());
         } catch (IllegalArgumentException e) {
-            throw new UsuarioCriarException("Tipo usuário inválido: " + usuarioAtualizar.tipoUsuario(), "USR-008");
+            throw new UsuarioException("Tipo usuário inválido: " + usuarioAtualizar.tipoUsuario(), "USR-008");
         }
         if (usuarioAtualizar.genero() == null) {
-            throw new UsuarioCriarException("Gênero não pode ser vazio.", "USR-002");
+            throw new UsuarioException("Gênero não pode ser vazio.", "USR-002");
         }
         try {
             Genero.valueOf(usuarioAtualizar.genero().name());
         } catch (IllegalArgumentException e) {
-            throw new UsuarioCriarException("Gênero inválido: " + usuarioAtualizar.genero(), "USR-003");
+            throw new UsuarioException("Gênero inválido: " + usuarioAtualizar.genero(), "USR-003");
         }
         if (usuarioAtualizar.raca() == null) {
-            throw new UsuarioCriarException("Raça não pode ser vazia.", "USR-004");
+            throw new UsuarioException("Raça não pode ser vazia.", "USR-004");
         }
         try {
             Raca.valueOf(usuarioAtualizar.raca().name());
         } catch (IllegalArgumentException e) {
-            throw new UsuarioCriarException("Raça inválida: " + usuarioAtualizar.raca(), "USR-005");
+            throw new UsuarioException("Raça inválida: " + usuarioAtualizar.raca(), "USR-005");
         }
         if (usuarioAtualizar.nacionalidade() == null || usuarioAtualizar.nacionalidade().isEmpty()) {
-            throw new UsuarioCriarException("Nacionalidade não pode ser vazia.", "USR-006");
+            throw new UsuarioException("Nacionalidade não pode ser vazia.", "USR-006");
         }
     }
 
     private void verificaUsuarioExistente(String nomeCompleto) {
         Usuario usuarioExistente = Usuario.buscaUsuarioNomeCompleto(nomeCompleto);
         if (usuarioExistente != null) {
-            throw new UsuarioCriarException("Usuário já existe com o nome: " + nomeCompleto, "USR-09");
+            throw new UsuarioException("Usuário já existe com o nome: " + nomeCompleto, "USR-09");
         }
     }
 
@@ -106,7 +106,7 @@ public class UsuarioService {
         try {
             usuario.persist();
         } catch (Exception e) {
-            throw new UsuarioCriarException("Erro ao criar usuário: " + e.getMessage(), "GEN-010");
+            throw new UsuarioException("Erro ao criar usuário: " + e.getMessage(), "GEN-010");
         }
     }
 
@@ -116,7 +116,7 @@ public class UsuarioService {
         Usuario usuario = Usuario.findById(id);
 
         if (usuario == null) {
-            throw new UsuarioCriarException("Usuário não encontrado com o ID: " + id, "GEN-011");
+            throw new UsuarioException("Usuário não encontrado com o ID: " + id, "GEN-011");
         }
 
         usuario.setNomeCompleto(usuarioAtualizar.nomeCompleto());
@@ -131,7 +131,7 @@ public class UsuarioService {
         Usuario usuario = Usuario.findById(id);
 
         if (usuario == null) {
-            throw new UsuarioCriarException("Usuário não encontrado com o ID: " + id, "GEN-011");
+            throw new UsuarioException("Usuário não encontrado com o ID: " + id, "GEN-011");
         } else {
             return UsuarioResposta.converteUsuario(usuario);
         }
@@ -147,7 +147,7 @@ public class UsuarioService {
                 .toList();
 
         if (usuarios.isEmpty()) {
-            throw new UsuarioCriarException("Nenhum não encontrado", "GEN-012");
+            throw new UsuarioException("Nenhum não encontrado", "GEN-012");
         } else {
             return usuarios;
         }
@@ -158,7 +158,7 @@ public class UsuarioService {
         Usuario usuario = Usuario.findById(id);
 
         if (usuario == null) {
-            throw new UsuarioCriarException("Usuário não encontrado com o ID: " + id, "GEN-011");
+            throw new UsuarioException("Usuário não encontrado com o ID: " + id, "GEN-011");
         } else {
             usuario.delete();
         }

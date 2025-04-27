@@ -1,4 +1,4 @@
-package br.com.tacontigo.repositories;
+package br.com.tacontigo.repositories.usuario;
 
 import java.time.LocalDateTime;
 
