@@ -42,19 +42,19 @@ public class QuestaoResource {
     }
 
     @GET
-    @Path("/users/{id}")
+    @Path("{id}")
     public QuestaoResposta busca(String id) {
         return questaoService.buscaQuestao(id);
     }
 
     @POST
-    @Path("/users/{id}")
+    @Path("{id}")
     public void atualiza(QuestaoAtualizarRequisicao questaoAtualizarRequisicao, String id) {
         questaoService.atualizaQuestao(questaoAtualizarRequisicao, id);
     }
 
     @DELETE
-    @Path("/users/{id}")
+    @Path("{id}")
     public void deleta(String id) {
         questaoService.deletaQuestao(id);
     }

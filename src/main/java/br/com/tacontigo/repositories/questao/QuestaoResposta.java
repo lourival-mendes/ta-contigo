@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import br.com.tacontigo.entities.Alternativa;
 import br.com.tacontigo.entities.Midia;
 import br.com.tacontigo.entities.Questao;
+import br.com.tacontigo.enums.Assunto;
 import br.com.tacontigo.enums.TipoQuestao;
 
 public record QuestaoResposta(
@@ -18,7 +19,8 @@ public record QuestaoResposta(
                 List<Midia> midia,
                 List<Alternativa> alternativa,
                 float peso,
-                int ordem) {
+                int ordem,
+                Assunto assunto) {
 
         public static QuestaoResposta converteQuestao(Questao questao) {
                 return new QuestaoResposta(
@@ -29,6 +31,7 @@ public record QuestaoResposta(
                                 questao.getMidia(),
                                 questao.getAlternativa(),
                                 questao.getPeso(),
-                                questao.getOrdem());
+                                questao.getOrdem(),
+                                questao.getAssunto());
         }
 }

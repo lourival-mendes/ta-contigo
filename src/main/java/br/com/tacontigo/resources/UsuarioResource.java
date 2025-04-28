@@ -18,7 +18,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/users")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioResource {
@@ -42,19 +42,19 @@ public class UsuarioResource {
     }
 
     @GET
-    @Path("/users/{id}")
+    @Path("{id}")
     public UsuarioResposta busca(String id) {
         return usuarioService.buscaUsuario(id);
     }
 
     @POST
-    @Path("/users/{id}")
+    @Path("{id}")
     public void atualiza(UsuarioAtualizarRequisicao usuarioAtualizarRequisicao, String id) {
         usuarioService.atualizaUsuario(usuarioAtualizarRequisicao, id);
     }
 
     @DELETE
-    @Path("/users/{id}")
+    @Path("{id}")
     public void deleta(String id) {
         usuarioService.deletaUsuario(id);
     }

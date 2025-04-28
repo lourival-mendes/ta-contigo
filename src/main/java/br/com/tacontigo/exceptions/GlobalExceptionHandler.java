@@ -10,6 +10,17 @@ import jakarta.ws.rs.core.Response;
 public class GlobalExceptionHandler {
 
     @ServerExceptionMapper
+    public RestResponse<ErrorResponse> handleAvaliacaoException(AvaliacaoException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getCode(),
+                "Erro ao utilizar o recurso Avaliação.",
+                ex.getMessage(),
+                LocalDateTime.now(),
+                null);
+        return RestResponse.status(Response.Status.BAD_REQUEST, errorResponse);
+    }
+
+    @ServerExceptionMapper
     public RestResponse<ErrorResponse> handleUsuarioException(UsuarioException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 ex.getCode(),

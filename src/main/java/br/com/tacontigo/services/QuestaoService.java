@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import br.com.tacontigo.entities.Questao;
+import br.com.tacontigo.enums.Assunto;
 import br.com.tacontigo.enums.TipoQuestao;
 import br.com.tacontigo.exceptions.QuestaoException;
 import br.com.tacontigo.repositories.questao.QuestaoAtualizarRequisicao;
@@ -39,6 +40,15 @@ public class QuestaoService {
         if (questaoCriar.alternativa() == null || questaoCriar.alternativa().size() == 0) {
             throw new QuestaoException("Alternativa não pode ser vazia.", "QUE-006");
         }
+        if (questaoCriar.assunto() == null || questaoCriar.assunto().name().isEmpty()) {
+            throw new QuestaoException("Assunto não pode ser vazio.", "QUE-007");
+        }
+        try {
+            Assunto.valueOf(questaoCriar.assunto().name());
+        } catch (Exception e) {
+            throw new QuestaoException("Assunto inválido: " + questaoCriar.assunto().name(), "QUE-003");
+        }
+
     }
 
     private void validaQuestaoAtualizar(QuestaoAtualizarRequisicao questaoAtualizar) {
@@ -56,6 +66,15 @@ public class QuestaoService {
         if (questaoAtualizar.alternativa() == null || questaoAtualizar.alternativa().size() == 0) {
             throw new QuestaoException("Alternativa não pode ser vazia.", "QUE-006");
         }
+        if (questaoAtualizar.assunto() == null || questaoAtualizar.assunto().name().isEmpty()) {
+            throw new QuestaoException("Assunto não pode ser vazio.", "QUE-007");
+        }
+        try {
+            Assunto.valueOf(questaoAtualizar.assunto().name());
+        } catch (Exception e) {
+            throw new QuestaoException("Assunto inválido: " + questaoAtualizar.assunto().name(), "QUE-003");
+        }
+
     }
 
     public void criaQuestao(QuestaoCriarRequisicao questaoCriar) {
@@ -69,6 +88,7 @@ public class QuestaoService {
         questao.setPeso(questaoCriar.peso());
         questao.setOrdem(questaoCriar.ordem());
         questao.setData(LocalDateTime.now());
+        questao.setAssunto(questaoCriar.assunto());
         try {
             questao.persist();
         } catch (Exception e) {
@@ -86,6 +106,7 @@ public class QuestaoService {
         questao.setAlternativa(questaoAtualizar.alternativa());
         questao.setPeso(questaoAtualizar.peso());
         questao.setOrdem(questaoAtualizar.ordem());
+        questao.setAssunto(questaoAtualizar.assunto());
         try {
             questao.update();
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import br.com.tacontigo.enums.Assunto;
 import br.com.tacontigo.enums.TipoQuestao;
 import br.com.tacontigo.exceptions.QuestaoException;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
@@ -24,6 +25,7 @@ public class Questao extends PanacheMongoEntity {
     private List<Alternativa> alternativa;
     private float peso;
     private int ordem;
+    private Assunto assunto;
 
     public ObjectId getId() {
         return id;
